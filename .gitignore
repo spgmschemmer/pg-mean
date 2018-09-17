@@ -1,0 +1,40 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/mean-frontend/dist
+/mean-frontend/tmp
+/mean-frontend/out-tsc
+
+# dependencies
+mean-frontend/node_modules
+mean-backend/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/mean-frontend/.sass-cache
+/mean-frontend/connect.lock
+/mean-frontend/coverage
+/mean-frontend/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/mean-frontend/typings
+
+# System Files
+.DS_Store
+Thumbs.db
