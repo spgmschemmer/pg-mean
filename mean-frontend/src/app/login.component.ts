@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { AuthService } from './auth.service';
 
 @Component({
-    selector: 'register',
+    selector: 'login',
     template: `
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
-                    Register New User
+                    Login
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content>
@@ -15,7 +15,7 @@ import { AuthService } from './auth.service';
                     <div>
                         <mat-form-field class="example-full-width">
                             <input matInput
-                                   [(ngModel)]="registerData.email"
+                                   [(ngModel)]="loginData.email"
                                    name="email"
                                    placeholder="Email"
                                    value="email"
@@ -25,27 +25,26 @@ import { AuthService } from './auth.service';
                     <div>
                         <mat-form-field class="example-full-width">
                             <input matInput
-                                   [(ngModel)]="registerData.pwd"
+                                   [(ngModel)]="loginData.pwd"
                                    name="password"
                                    placeholder="password"
                                    value="password"
                                    type="password">
                         </mat-form-field>
                     </div>
-                    <button mat-raised-button color="primary" (click)="post()">Register</button>
+                    <button mat-raised-button color="primary" (click)="post()">Login</button>
                 </form>
             </mat-card-content>
         </mat-card>
     `
   })
 
-export class RegisterComponent {
-    registerData = {};
+export class LoginComponent {
+    loginData = {};
 
-    constructor(private apiService: AuthService) {}
+    constructor(private authService: AuthService) {}
 
     post() {
-        console.log(this.registerData);
-        this.apiService.registerUser(this.registerData)
+        this.authService.loginUser(this.loginData);
     }
 }
