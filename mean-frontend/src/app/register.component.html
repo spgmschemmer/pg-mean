@@ -1,0 +1,51 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Register New User
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form class="example-form">
+            <div>
+                <mat-form-field class="example-full-width">
+                    <input matInput
+                           [(ngModel)]="registerData.email"
+                           name="email"
+                           placeholder="Email"
+                           value="email"
+                           type="email">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="example-full-width">
+                    <input matInput
+                           [(ngModel)]="registerData.pwd"
+                           name="password"
+                           placeholder="password"
+                           value="password"
+                           type="password">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="example-full-width">
+                    <input matInput
+                           [(ngModel)]="registerData.name"
+                           name="name"
+                           placeholder="name"
+                           value="name">
+                </mat-form-field>
+            </div>  
+            <div>
+                <mat-form-field class="example-full-width" style="width: 100%">
+                    <textarea matInput
+                           [(ngModel)]="registerData.description"
+                           name="description"
+                           placeholder="description"
+                           value="description">
+                    </textarea>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" (click)="post()">Register</button>
+        </form>
+    </mat-card-content>
+</mat-card>

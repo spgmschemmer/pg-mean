@@ -2,27 +2,47 @@ var express = require('express')
 var cors = require('cors')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose')
-var jwt = require('jwt-simple')
 
 var User = require('./models/User.js')
+var Post = require('./models/Post.js')
+var auth = require('./auth.js')
+
 
 mongoose.Promise = Promise;
 
 var app = express()
-var posts = [
-    {
-        message: 'hello'
-    },
-    {
-        message: 'hi'
-    }
-]
 
 app.use(cors())
 app.use(bodyParser.json())
 
-app.get('/posts', (req,res) => {
-    res.send(posts)
+app.get('/posts/:id', async (req,res) => {
+    var author = req.params.id
+    var posts = await Post.find({author})
+
+    try {
+        res.send(posts);    
+    } catch (error) {
+        console.error(error)
+        res.sendStatus('500')
+    }
+})
+
+app.post('/post', (req,res) => {
+    var postData = req.body
+    postData.author = '5ba3a971c7f1b6605011f64a'
+
+    console.log(postData)
+
+    var post = new Post(postData)
+
+    post.save((err, result) => {
+        if(err) {
+            console.error('saving post error')
+            return res.status(500).send({message: 'Saving post error'})
+        }
+
+        res.sendStatus(200)
+    })    
 })
 
 app.get('/users', async (req,res) => {
@@ -46,42 +66,11 @@ app.get('/profile/:id', async (req,res) => {
     }
 })
 
-app.post('/register', (req,res) => {
-    var userData = req.body;
-
-    var user = new User(userData)
-
-    user.save((err, result) => {
-        if(err)
-            console.log('1')
-
-        res.sendStatus(200)
-    })
-})
-
-app.post('/login', async (req,res) => {
-    var userData = req.body;
-
-    var user = await User.findOne({email: userData.email})
-
-    if (!user)
-        return res.status(401).send({message: 'Email invalid'})
-
-    if (userData.pwd != user.pwd)
-        return res.status(401).send({message: 'Password invalid'})
-
-    var payload = {}
-
-    var token = jwt.encode(payload, '123')
-
-    console.log(token)
-
-    res.status(200).send({token})
-})
-
 mongoose.connect('mongodb://test:test123@ds261332.mlab.com:61332/pssocial', { useNewUrlParser: true }, (err) => {
     if(!err)
         console.log("connected to mongo")
 })
+
+app.use('/auth', auth)
 
 app.listen(3000)
